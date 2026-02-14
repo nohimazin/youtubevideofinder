@@ -1,5 +1,6 @@
 import dataclasses, itertools
 from quart import Quart, render_template, request, Response, redirect, send_from_directory, url_for
+from quart_cors import cors
 import re, yaml, json
 import findyoutubevideo
 
@@ -8,6 +9,7 @@ class EscapingQuart(Quart):
         return filename.endswith(".j2") or super().select_jinja_autoescape(filename)
 
 app = EscapingQuart(__name__)
+app = cors(app, allow_origin="*")
 
 with open('config.yml', 'r') as file:
     config_yml = yaml.safe_load(file)
